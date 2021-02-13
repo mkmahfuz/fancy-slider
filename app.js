@@ -67,7 +67,12 @@ const createSlider = () => {
   document.querySelector('.main').style.display = 'block';
   // hide image aria
   imagesArea.style.display = 'none';
-  const duration = document.getElementById('duration').value || 1000;
+  
+  // const duration = document.getElementById('duration').value || 1000; //previous code
+  //fixed the duration input bug -- validation cos: 1.no negative value,2. only number,3. min 1sec(1000ms)
+  let duration = document.getElementById('duration').value;
+  if(duration <= 1000){duration = 1000;}
+  console.log(duration);
   sliders.forEach(slide => {
     let item = document.createElement('div')
     item.className = "slider-item";
