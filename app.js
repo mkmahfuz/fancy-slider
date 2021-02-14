@@ -7,7 +7,6 @@ const sliderContainer = document.getElementById('sliders');
 // selected image 
 let sliders = [];
 
-
 // If this key doesn't work
 // Find the name in the url and go to their website
 // to create your own api key
@@ -26,6 +25,7 @@ const showImages = (images) => {
     gallery.appendChild(div)
   })
   toggleSpinner(); //added for bonus-1
+  imageCount(images);
 }
 
 const getImages = (query) => {
@@ -38,20 +38,20 @@ const getImages = (query) => {
 
 let slideIndex = 0;
 const selectItem = (event, img) => {
-  //khalid code-1
-  console.log(sliders.length);
-  //end khalid code-1
+  
   let element = event.target;
   //element.classList.add('added');//prev code
-  element.classList.toggle('added');//feature-2 image selcetion toggle. my code -khalid
+  element.classList.toggle('added');//feature-2 image selcetion toggle.
  
   let item = sliders.indexOf(img);
   if (item === -1) {
     sliders.push(img);
   } else {
-    sliders.splice(item,1); //feature-2  deselected image remove from the array. -khalid
-    console.log('Hey, Already added !'); //will be remove later -khalid
+    sliders.splice(item,1); //feature-2  deselected image remove from the array.
+    //console.log('Hey, Already added !'); //will be remove later
   }
+  // selected image counter show-- for bonus-2 part-2 
+  document.getElementById("selected").innerHTML = ` Selected Images: <button type="button" class="btn btn-outline-warning btn-sm">${sliders.length}</button>`;
 }
 var timer
 const createSlider = () => {
@@ -60,8 +60,8 @@ const createSlider = () => {
     alert('Select at least 2 image.')
     return;
   }
-  // crate slider previous next area
-  sliderContainer.innerHTML = '';
+  // create slider previous next area
+  sliderContainer.innerHTML = '';  
   const prevNext = document.createElement('div');
   prevNext.className = "prev-next d-flex w-100 justify-content-between align-items-center";
   prevNext.innerHTML = ` 
@@ -77,7 +77,8 @@ const createSlider = () => {
   // const duration = document.getElementById('duration').value || 1000; //previous code
   //fixed the duration input bug -- validation cos: 1.no negative value,2. only number,3. min 1sec(1000ms)
   let duration = document.getElementById('duration').value;
-  if(duration <= 1000){duration = 1000;}
+  if(duration <= 0){duration = 1000;}
+  //document.getElementById('duration').value = duration;
   console.log(duration);
   sliders.forEach(slide => {
     let item = document.createElement('div')
@@ -142,4 +143,9 @@ sliderBtn.addEventListener('click', function () {
 const toggleSpinner = ()=>{
   const spinner = document.getElementById("loading-spinner");
   spinner.classList.toggle("d-none");
+}
+//image count added for bonus-2 part-1
+const imageCount = (images)=>{
+  const imageCounter = document.getElementById("image-counter");
+  imageCounter.innerHTML = `<h6>Total Images found : <button type="button" class="btn btn-outline-primary btn-sm">${images.length}</button><span id="selected"></span></h6>`;
 }
