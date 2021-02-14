@@ -25,10 +25,11 @@ const showImages = (images) => {
     div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
     gallery.appendChild(div)
   })
-
+  toggleSpinner(); //added for bonus-1
 }
 
 const getImages = (query) => {
+  toggleSpinner(); //added for bonus-1
   fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
     .then(data => showImages(data.hits))
@@ -37,15 +38,18 @@ const getImages = (query) => {
 
 let slideIndex = 0;
 const selectItem = (event, img) => {
+  //khalid code-1
+  console.log(sliders.length);
+  //end khalid code-1
   let element = event.target;
   //element.classList.add('added');//prev code
-  element.classList.toggle('added');//my code -khalid
+  element.classList.toggle('added');//feature-2 image selcetion toggle. my code -khalid
  
   let item = sliders.indexOf(img);
   if (item === -1) {
     sliders.push(img);
   } else {
-    sliders.splice(item,1);
+    sliders.splice(item,1); //feature-2  deselected image remove from the array. -khalid
     console.log('Hey, Already added !'); //will be remove later -khalid
   }
 }
@@ -133,3 +137,9 @@ searchBtn.addEventListener('click', function () {
 sliderBtn.addEventListener('click', function () {
   createSlider()
 })
+
+//spinner added while data loading for bonus-1
+const toggleSpinner = ()=>{
+  const spinner = document.getElementById("loading-spinner");
+  spinner.classList.toggle("d-none");
+}
